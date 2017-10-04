@@ -11,7 +11,7 @@ class Satyam(IPlugin):
     def register_restaurants(self) :
         r = Restaurant("Satyam", "Satyam", self, "dummy")
         register_restaurant(r)
-    def get_food_items(self) :
+    def get_food_items(self, **kwargs) :
         s = sys.stderr
         sys.stderr = open("/dev/null", "w")
         user_agent = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'

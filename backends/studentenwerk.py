@@ -12,7 +12,7 @@ import multiprocessing
 
 from yapsy import NormalizePluginNameForModuleName as normalize
 
-mensenliste = {"TU Hardenberg" : "mensa-tu-hardenbergstra%C3%9Fe", "TU Marchstraße": "cafeteria-tu-marchstra%C3%9Fe", "TU Skyline": "cafeteria-tu-skyline", "TU Architektur": "cafeteria-tu-architektur", "TU Ackerstraße": "cafeteria-tu-ackerstra%C3%9Fe"}
+mensenliste = {"TU Hardenbergstraße" : "mensa-tu-hardenbergstra%C3%9Fe", "TU Marchstraße": "cafeteria-tu-marchstra%C3%9Fe", "TU Skyline": "cafeteria-tu-skyline", "TU Architektur": "cafeteria-tu-architektur", "TU Ackerstraße": "cafeteria-tu-ackerstra%C3%9Fe"}
 
 
 
@@ -23,7 +23,7 @@ def pr_f(j) :
 
 class Studentenwerk(IPlugin) :
     def register_restaurants (self) :
-        mensenliste = {"TU Hardenberg" : "mensa-tu-hardenbergstra%C3%9Fe", "TU Marchstraße": "cafeteria-tu-marchstra%C3%9Fe", "TU Skyline": "cafeteria-tu-skyline", "TU Architektur": "cafeteria-tu-architektur", "TU Ackerstraße": "cafeteria-tu-ackerstra%C3%9Fe"}
+        mensenliste = {"TU Hardenbergstraße" : "mensa-tu-hardenbergstra%C3%9Fe", "TU Marchstraße": "cafeteria-tu-marchstra%C3%9Fe", "TU Skyline": "cafeteria-tu-skyline", "TU Architektur": "cafeteria-tu-architektur", "TU Ackerstraße": "cafeteria-tu-ackerstra%C3%9Fe"}
         for h,n in mensenliste.items() :
             r = Restaurant(normalize(h), h, self, "dummy", [n])
             register_restaurant(r)
@@ -48,7 +48,7 @@ class Studentenwerk(IPlugin) :
             for m in meals :        
                 namesel = CSSSelector('.bold')
                 nm = namesel(m)[0].text
-                if ignore_nudelauswahl  and "Nudelauswahl" in nm:
+                if ignore_nudelauswahl  and "Nudelauswahl" in nm :
                     continue
                 pricesel = CSSSelector('.col-md-3')
                 veg = 0

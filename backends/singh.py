@@ -12,7 +12,8 @@ class Signh(IPlugin) :
     def register_restaurants(self) :
         r = Restaurant("Singh", "Mathe-Café", self, "dummy")
         register_restaurant(r)
-    def get_food_items(self) :
+    def get_food_items(self, **kwargs) :
+        s = sys.stderr
         sys.stderr = open("/dev/null", "w")
         weekday = datetime.datetime.today().weekday()
         if weekday > 4 :
@@ -46,6 +47,7 @@ class Signh(IPlugin) :
                 elif "VEGAN" in vegsel(k)[0].text :
                     veg = 2
             fl.append(Food(name, price, "Essen", veg, desc))
+        sys.stderr = s
         return fl
 
 if __name__ == "__main__":
