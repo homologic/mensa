@@ -1,0 +1,3 @@
+[Core]
+Name = Plain Text Output
+Module = plain-text
