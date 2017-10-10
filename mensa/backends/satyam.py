@@ -2,7 +2,7 @@ import urllib.request, urllib.error, urllib.parse
 from lxml import etree
 from lxml.cssselect import CSSSelector
 import html5lib
-from base import *
+from mensa.base import *
 import re
 import sys
 from yapsy.IPlugin import IPlugin

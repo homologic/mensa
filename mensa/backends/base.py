@@ -8,16 +8,6 @@ class Food :
         self.veggie = veggie
         self.desc=desc
         self.ingredients=ingredients
-
-class NoMenuError(Exception) :
-    """ gets raised if there's no menu"""
-
-class Frontend(object) :
-    def __init__(self, name, human_name, description="", optional_args=[]) :
-        self.name = name
-        self.human_name = human_name
-        self.description = description
-        self.optional_args = []
         
 def formt (food) :
     cat = []
@@ -44,8 +34,9 @@ class Restaurant(object):
         self.optional_args = optional_args
         self.obligatory_args = obligatory_args
 
-    def get_food(self,**opt_args) :
-        return self.module.get_food_items(*self.obligatory_args, **opt_args)
+    def get_food(**opt_args) :
+        self.module.get_food_items(*obligatory_args, **optional_args)
+
 
 def register_restaurant(restaurant):
     global foodsources

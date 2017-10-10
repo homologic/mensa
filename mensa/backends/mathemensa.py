@@ -8,7 +8,7 @@ import re
 import  xml.sax.saxutils as saxutils
 import html5lib
 import datetime
-from base import *
+from mensa.base import *
 from yapsy.IPlugin import IPlugin
 
 class Mathemensa(IPlugin) :

@@ -5,7 +5,7 @@ import html5lib
 import re
 import sys
 import datetime
-from base import *
+from mensa.base import *
 from yapsy.IPlugin import IPlugin
 
 class Signh(IPlugin) :

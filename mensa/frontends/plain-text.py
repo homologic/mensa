@@ -1,4 +1,4 @@
-import base
+from mensa import base
 from yapsy.IPlugin import IPlugin
 class TextRenderer(IPlugin) :
     def render (self, foods, **options) :
@@ -19,4 +19,5 @@ class TextRenderer(IPlugin) :
                     r = r+"\t  "+i.desc+"\n"
         print(r)
 
-            
+    def register_renderer(self) :
+        base.register_renderer(base.Renderer("plain-text", "Plain Text Renderer", self))

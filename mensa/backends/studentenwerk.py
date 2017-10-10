@@ -5,7 +5,7 @@ import urllib.request, urllib.error, urllib.parse
 from lxml import etree
 from lxml.cssselect import CSSSelector
 import html5lib
-from base import *
+from mensa.base import *
 from yapsy.IPlugin import IPlugin
 import multiprocessing
 
