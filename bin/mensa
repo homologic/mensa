@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import argparse
+
 from mensa import logic
 from mensa import base
 

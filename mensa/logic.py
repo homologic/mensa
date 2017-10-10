@@ -5,10 +5,9 @@ import urllib.error
 import os
 from yapsy.PluginManager import PluginManager
 
-
 def init_foodsources():
     backends = PluginManager()
-    backends.setPluginPlaces([os.path.join(os.path.dirname(os.path.realpath(__file__)),"backends")])
+    backends.setPluginPlaces([os.path.join(os.path.dirname(os.path.realpath(__file__)),"backends")])    
     backends.collectPlugins()
     for pluginInfo in backends.getAllPlugins():
         backends.activatePluginByName(pluginInfo.name)

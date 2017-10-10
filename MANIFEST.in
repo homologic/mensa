@@ -1,0 +1,4 @@
+include mensa/frontends/*.py
+include mensa/frontends/*.yapsy-plugin
+include mensa/backends/*.py
+include mensa/backends/*.yapsy-plugin
