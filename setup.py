@@ -10,13 +10,13 @@ def read(fname):
 
 setup(
     name = "mensa",
-    version = "0.1.2",
+    version = "0.1.3",
     author = "Antonia Pérez-Cerezo",
     author_email = "antonia@antonia.is",
     description = ("A program that fetches menus from various restaurants. Pre-installed by default are various cafeterias around TU Berlin."),
     license = "MIT",
     keywords = "food",
-    url = "",
+    url = "https://gitlab.tu-berlin.de/gpcf/mensa/",
     packages=['mensa'],
     scripts=['bin/mensa'],
     long_description=read('README'),

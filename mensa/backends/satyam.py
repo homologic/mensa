@@ -21,6 +21,7 @@ class Satyam(IPlugin):
         response = urllib.request.urlopen(req)
         the_page = response.read()
         document = html5lib.parse(the_page, treebuilder="lxml")
+        sys.stderr = s
         groupsel = CSSSelector('.news-latest-item-content')
         k = etree.tostring(groupsel(document)[0])
         name = re.sub(r'<.+?>', ' ', str(k))
@@ -29,7 +30,7 @@ class Satyam(IPlugin):
         name = " ".join(name.split())
 
         name = name.replace("5,95 €", "")
-        sys.stderr = s
+
         return [Food("Mittagstisch Express", "5,95 €", "Mittagstisch", 2, name[3:-1])]
     
 

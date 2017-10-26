@@ -35,6 +35,8 @@ def get_food(restlist=False, options={}) :
             print(i.human_name + ": No menu found. This could be due to a holiday or due to an error in the script.")
         except urllib.error.HTTPError as e :
             print(i.human_name + ": Fetching menu failed: %s" % str(e))
+        except :
+            print(i.human_name + ": Unknown error")
     return foodl
 
 def render(to_render, rendlist=False, options={}) :
