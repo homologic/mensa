@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name = "mensa",
-    version = "0.1.3",
+    version = "0.3",
     author = "Antonia Pérez-Cerezo",
     author_email = "antonia@antonia.is",
     description = ("A program that fetches menus from various restaurants. Pre-installed by default are various cafeterias around TU Berlin."),
@@ -21,6 +21,7 @@ setup(
     scripts=['bin/mensa'],
     long_description=read('README'),
     include_package_data=True,
+    install_requires=['yapsy','lxml', 'cssselect'],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Topic :: Utilities",

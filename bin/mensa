@@ -5,13 +5,16 @@ from mensa import logic
 from mensa import base
 
 parser = argparse.ArgumentParser(description='Fetch menus from various sources')
-# parser.add_argument('integers', metavar='N', type=int, nargs='+',
-#                     help='an integer for the accumulator')
-parser.add_argument('-r', '--restaurants',  dest='rest', action='store',
-                    metavar='LIST',
-                    help='Comma-separated list of restaurants to fetch the menus from.')
+parser.add_argument('rest', nargs="*",
+                    metavar='RESTAURANT',
+                    help='Fetch menus from this restaurant')
 parser.add_argument('-l', '--list-restaurants',  dest='list', action='store_true',
                     help='get list of restaurants')
+parser.add_argument('-f', '--formatter', dest='form', action='store', nargs=1, help="formatter to use")
+parser.add_argument('-g', '--vegetarian',  dest='vegetarian', action='store_true',
+                    help='show only vegetarian meals')
+parser.add_argument('-G', '--vegan',  dest='vegan', action='store_true',
+                    help='show only vegan meals')
 
 
 args = parser.parse_args()
@@ -19,6 +22,16 @@ args = parser.parse_args()
 logic.init_foodsources()
 ## Load frontends (not yet implemented)
 logic.init_renderers()
+veggie = 0
+form = ["plain-text"]
+if args.form :
+    form = args.form
+    
+
+if args.vegetarian :
+    veggie = 1
+if args.vegan :
+    veggie = 2
 
 
 
@@ -28,7 +41,7 @@ if args.list :
     exit()
 restlist = None
 if args.rest :
-    restlist = args.rest.split(",")
+    restlist = args.rest
 
 foodl = logic.get_food(restlist)
-logic.render(foodl, ["plain-text"])
+logic.render(foodl, form, only_veggie=veggie)
