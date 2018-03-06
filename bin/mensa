@@ -15,18 +15,22 @@ parser.add_argument('-g', '--vegetarian',  dest='vegetarian', action='store_true
                     help='show only vegetarian meals')
 parser.add_argument('-G', '--vegan',  dest='vegan', action='store_true',
                     help='show only vegan meals')
+parser.add_argument('-s', '--student-prices',  dest='student', action='store_true', default=False,
+                    help='show only student prices')
+
+parser.add_argument('--no-parallel', dest="no_parallel", action="store_true", default=False, help="Do not parallelize fetching, might help with rate-limited websites")
 
 
 args = parser.parse_args()
 ## Load backends
 logic.init_foodsources()
-## Load frontends (not yet implemented)
+## Load frontends
 logic.init_renderers()
 veggie = 0
 form = ["plain-text"]
 if args.form :
     form = args.form
-    
+
 
 if args.vegetarian :
     veggie = 1
@@ -43,5 +47,5 @@ restlist = None
 if args.rest :
     restlist = args.rest
 
-foodl = logic.get_food(restlist)
-logic.render(foodl, form, only_veggie=veggie)
+foodl = logic.get_food(restlist, no_parallel=args.no_parallel)
+logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student)

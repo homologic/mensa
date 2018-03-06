@@ -57,3 +57,6 @@ def register_restaurant(restaurant):
 def register_renderer(renderer) :
     global renderers
     renderers[renderer.name] = renderer
+
+def only_student_prices(price):
+    return price.split("/")[0]

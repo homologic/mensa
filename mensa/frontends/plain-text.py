@@ -12,13 +12,17 @@ class TextRenderer(IPlugin) :
             r = r+"*"*20+restaurant.human_name+"*"*20+"\n"#+base.formt(food)
             food.sort(key=lambda foo: foo.category)
             for i in food:
+                if options["only_student_prices"] :
+                    price = base.only_student_prices(i.price)
+                else:
+                    price = i.price
                 if options["only_veggie"] and options["only_veggie"] > i.veggie :
                     continue
                 if not i.category in cat :
                     cat.append(i.category)
                     if not i.category == None : 
                         r=r+ i.category+"\n"
-                r=r+"\t" + i.name.ljust(80) + "\t"+ i.price.ljust(20) + vegkeys[i.veggie]+"\n"
+                r=r+"\t" + i.name.ljust(80) + "\t"+ price.ljust(20) + vegkeys[i.veggie]+"\n"
                 if i.desc :
                     r = r+"\t  "+i.desc+"\n"
         print(r)

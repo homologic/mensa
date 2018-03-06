@@ -28,9 +28,10 @@ def init_renderers():
         pluginInfo.plugin_object.register_renderer()
     
     
-def get_food(restlist=False, **options) :
+def get_food(restlist=False, no_parallel=False,**options) :
     foodl = []
-    if parallel :
+
+    if parallel and not no_parallel:
         r = []
         for k,i in base.foodsources.items() :
             if restlist and not i.name in restlist :
