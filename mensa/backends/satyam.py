@@ -24,14 +24,14 @@ class Satyam(IPlugin):
         sys.stderr = s
         groupsel = CSSSelector('.news-latest-item-content')
         k = etree.tostring(groupsel(document)[0])
+        price = groupsel(document)[0][-1].text.strip()
         name = re.sub(r'<.+?>', ' ', str(k))
         name = etree.fromstring("<p>%s</p>"%name).text.strip()
         name = name.replace("\\n", "")
         name = " ".join(name.split())
+        name = name.replace(price, "")
 
-        name = name.replace("5,95 €", "")
-
-        return [Food("Mittagstisch Express", "5,95 €", "Mittagstisch", 2, name[3:-1])]
+        return [Food("Mittagstisch Express", price, "Mittagstisch", 2, name[3:-1])]
     
 
 # if __name__ == "__main__":
