@@ -11,11 +11,14 @@ parser.add_argument('rest', nargs="*",
 parser.add_argument('-l', '--list-restaurants',  dest='list', action='store_true',
                     help='get list of restaurants')
 parser.add_argument('-f', '--formatter', dest='form', action='store', nargs=1, help="formatter to use")
+parser.add_argument('-p', '--pos', dest='pos', action='store', nargs=1, help="Your current position")
+parser.add_argument('-d', '--dist', dest='dist', action='store_true', help="Show distances to restaurants")
+parser.add_argument('-r', '--radius', dest='rad', action='store', nargs=1, help="Radius to find restaurants in")
 parser.add_argument('-g', '--vegetarian',  dest='vegetarian', action='store_true',
                     help='show only vegetarian meals')
 parser.add_argument('-G', '--vegan',  dest='vegan', action='store_true',
                     help='show only vegan meals')
-parser.add_argument('-s', '--student-prices',  dest='student', action='store_true', default=False,
+parser.add_argument('--studentenwerk-prices',  dest='student', action='store_true', default=False,
                     help='show only student prices')
 
 parser.add_argument('--no-parallel', dest="no_parallel", action="store_true", default=False, help="Do not parallelize fetching, might help with rate-limited websites")
@@ -28,8 +31,27 @@ logic.init_foodsources()
 logic.init_renderers()
 veggie = 0
 form = ["plain-text"]
+if args.dist and not args.pos or args.rad and not args.pos :
+    print("-d and -r require a position")
+    exit(1)
+
+
+if args.pos :
+    try :
+        args.pos = tuple([ float(i) for i in args.pos[0].split(",")])
+        assert len(args.pos) == 2
+    except :
+        print("-p has the format LAT,LONG. For instance: 52.5133727,13.3240049")
+        exit(1)
+if args.rad :
+    try :
+        args.rad = float(args.rad[0])
+    except :
+        print("-r requires a floating point number!")
+        exit(1)
 if args.form :
     form = args.form
+
 
 
 if args.vegetarian :
@@ -47,5 +69,5 @@ restlist = None
 if args.rest :
     restlist = args.rest
 
-foodl = logic.get_food(restlist, no_parallel=args.no_parallel)
-logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student)
+foodl = logic.get_food(restlist, no_parallel=args.no_parallel, pos=args.pos, rad=args.rad)
+logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student, pos=args.pos, dist=args.dist)

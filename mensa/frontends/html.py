@@ -12,6 +12,10 @@ class HTMLRenderer(IPlugin) :
             if not food :
                 continue
             r = r+"<div class=\"restaurant\"><h3>"+esc(restaurant.human_name)+"</h3>"+"\n"#+base.formt(food)
+            if "pos" in options and restaurant.pos and "dist" in options :
+                ## display distance to restaurant
+                r=r+"<div class=\"distance\">Distance: %.2f km</div>\n" % base.dist(options["pos"], restaurant.pos)
+
             food.sort(key=lambda foo: foo.category)
             for i in food:
                 if options["only_student_prices"] :
@@ -29,7 +33,7 @@ class HTMLRenderer(IPlugin) :
                 r=r+"<li class=\"fooditem\" ><span class=\"name\">" + esc(i.name) + "</span><span class=\"price\">"+ esc(price) + "</span><span class=\"veggie\">"+ esc(vegkeys[i.veggie])+"</span>\n"
                 if i.desc :
                     r = r+"<div class=\"description\">"+esc(i.desc)+"</div>\n"
-            r = r+"</div>"
+            r = r+"</ul></div>"
         r = r
         print(r)
 

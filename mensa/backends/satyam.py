@@ -9,7 +9,7 @@ from yapsy.IPlugin import IPlugin
 
 class Satyam(IPlugin):
     def register_restaurants(self) :
-        r = Restaurant("Satyam", "Satyam", self, "dummy")
+        r = Restaurant("Satyam", "Satyam", self, "dummy", pos=(52.5089202,13.3198446))
         register_restaurant(r)
     def get_food_items(self, **kwargs) :
         s = sys.stderr

@@ -4,13 +4,14 @@ from mensa import base
 import urllib.error
 import os
 import sys
+from math import acos, radians, pi, cos, sin
 from yapsy.PluginManager import PluginManager
 try:
     import multiprocessing
     parallel=True
 except:
     parallel = False
-
+    
 def init_foodsources():
     backends = PluginManager()
     backends.setPluginPlaces([os.path.join(os.path.dirname(os.path.realpath(__file__)),"backends")])    
@@ -30,19 +31,22 @@ def init_renderers():
     
 def get_food(restlist=False, no_parallel=False,**options) :
     foodl = []
+    sources = []
+    for k,i in base.foodsources.items() :
+        if restlist and not i.name in restlist :
+            continue
+        if options["pos"] and options["rad"] and base.dist(options["pos"], i.pos) > float(options["rad"]) :
+            continue
+        sources.append((k,i))
+
 
     if parallel and not no_parallel:
         r = []
-        for k,i in base.foodsources.items() :
-            if restlist and not i.name in restlist :
-                continue
-            r.append(i)
-            
+        for k,i in sources :
+            r.append(i)            
         foodl = get_food_parallel(r, ignore_nudelauswahl=True)
     else : 
-        for k,i in base.foodsources.items() :
-            if restlist and not i.name in restlist :
-                continue
+        for k,i in sources :
             try : 
                 food = i.get_food(ignore_nudelauswahl=True)
                 foodl.append((i, food))

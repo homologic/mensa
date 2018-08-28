@@ -10,7 +10,23 @@ from yapsy.IPlugin import IPlugin
 import multiprocessing
 import datetime
 
+
 from yapsy import NormalizePluginNameForModuleName as normalize
+mensenliste = {"TU Hardenbergstraße" : ["mensa-tu-hardenbergstra%C3%9Fe", (52.5097684, 13.3259478)],
+               "TU Marchstraße": ["cafeteria-tu-marchstra%C3%9Fe", ( 52.5166071, 13.3234066)],
+               "TU Skyline": ["cafeteria-tu-skyline", (52.5128648, 13.3200313)],
+               "TU Architektur": ["cafeteria-tu-architektur", (52.5137508, 13.3234541)],
+               "TU Ackerstraße": ["cafeteria-tu-ackerstra%C3%9Fe", (52.5386545, 13.3845294)],
+               "HU Nord": ["mensa-hu-nord", (52.52816,13.38208)],
+               "HU Oase Adlershof" : ["mensa-hu-oase-adlershof", ( 52.4293965, 13.5300404)],
+               "HU Süd": ["mensa-hu-sued", (52.5185929, 13.3928965)],
+               "HU Spandauer Straße": ["mensa-hu-spandauer-stra%C3%9Fe", (52.52096,13.40258)],
+               "HU „Jacob und Wilhelm Grimm Zentrum“": ["cafeteria-hu-im-jacob-und-wilhelm-grimm-zentrum", (52.52033,13.39083)],
+               "FU Herrenhaus Düppel": ["mensa-fu-herrenhaus-d%C3%BCppel", (52.4299794,13.2352233)],
+               "Mensa FU II Otto-von-Simson-Straße": ["mensa-fu-ii", (52.4531000, 13.2890712)],               
+}
+
+
 
 class Studentenwerk(IPlugin) :
     def fetch_page(self, mensa) :
@@ -24,9 +40,8 @@ class Studentenwerk(IPlugin) :
         document = html5lib.parse(the_page, treebuilder="lxml")
         return document
     def register_restaurants (self) :
-        mensenliste = {"TU Hardenbergstraße" : "mensa-tu-hardenbergstra%C3%9Fe", "TU Marchstraße": "cafeteria-tu-marchstra%C3%9Fe", "TU Skyline": "cafeteria-tu-skyline", "TU Architektur": "cafeteria-tu-architektur", "TU Ackerstraße": "cafeteria-tu-ackerstra%C3%9Fe"}
         for h,n in mensenliste.items() :
-            r = Restaurant(normalize(h), h, self, "dummy", [n])
+            r = Restaurant(normalize(h), h, self, "dummy", [n[0]], pos=n[1])
             register_restaurant(r)
     def get_food_items(self, mensa="mensa-tu-hardenbergstra%C3%9Fe", ignore_nudelauswahl=False) :
         document = self.fetch_page(mensa)
@@ -34,10 +49,10 @@ class Studentenwerk(IPlugin) :
         groups = [e for e in groupsel(document)]
         fl = []
         for i in groups :
-            try: 
+            try:
                 name = CSSSelector('.splGroup')(i)[0].text
             except:
-                raise NoMenuError from None
+                raise NoMenuError from None        
             sel = CSSSelector('.splMeal')
             meals = [e for e in sel(i)]
             for m in meals :        

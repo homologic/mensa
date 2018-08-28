@@ -13,7 +13,7 @@ from yapsy.IPlugin import IPlugin
 
 class Mathemensa(IPlugin) :
     def register_restaurants(self) :
-        r = Restaurant("Mathemensa", "Mathemensa", self, "dummy")
+        r = Restaurant("Mathekantine", "Mathekantine", self, "dummy", pos=(52.51388,13.3235066))
         register_restaurant(r)
         
     def get_food_items(self, **kwargs) :

@@ -10,6 +10,9 @@ class TextRenderer(IPlugin) :
             if not food :
                 continue
             r = r+"*"*20+restaurant.human_name+"*"*20+"\n"#+base.formt(food)
+            if "pos" in options and restaurant.pos and "dist" in options :
+                ## display distance to restaurant
+                r=r+"Distance: %.2f km\n" % base.dist(options["pos"], restaurant.pos)
             food.sort(key=lambda foo: foo.category)
             for i in food:
                 if options["only_student_prices"] :

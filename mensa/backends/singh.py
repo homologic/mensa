@@ -10,7 +10,7 @@ from yapsy.IPlugin import IPlugin
 
 class Signh(IPlugin) :
     def register_restaurants(self) :
-        r = Restaurant("Singh", "Mathe-Café", self, "dummy")
+        r = Restaurant("Singh", "Mathe-Café", self, "dummy", pos=(52.5133727,13.3240049))
         register_restaurant(r)
     def get_food_items(self, **kwargs) :
         s = sys.stderr
