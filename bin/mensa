@@ -69,5 +69,5 @@ restlist = None
 if args.rest :
     restlist = args.rest
 
-foodl = logic.get_food(restlist, no_parallel=args.no_parallel, pos=args.pos, rad=args.rad)
+foodl = logic.get_food(restlist, no_parallel=args.no_parallel, pos=args.pos, rad=args.rad, only_student_prices=args.student)
 logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student, pos=args.pos, dist=args.dist)

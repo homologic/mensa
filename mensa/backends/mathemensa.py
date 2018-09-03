@@ -10,7 +10,7 @@ import html5lib
 import datetime
 from mensa.base import *
 from yapsy.IPlugin import IPlugin
-
+from collections import OrderedDict
 class Mathemensa(IPlugin) :
     def register_restaurants(self) :
         r = Restaurant("Mathekantine", "Mathekantine", self, "dummy", pos=(52.51388,13.3235066))
@@ -46,4 +46,6 @@ class Mathemensa(IPlugin) :
                         if "(v)" in name or "Gemüseplatte" in name :
                             veg = 1
                         fl.append(Food(name, price, "Menü", veg))
-        return fl
+        d = OrderedDict()
+        d["Menü"] = fl
+        return d

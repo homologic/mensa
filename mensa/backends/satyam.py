@@ -6,6 +6,7 @@ from mensa.base import *
 import re
 import sys
 from yapsy.IPlugin import IPlugin
+from collections import OrderedDict
 
 class Satyam(IPlugin):
     def register_restaurants(self) :
@@ -30,9 +31,9 @@ class Satyam(IPlugin):
         name = name.replace("\\n", "")
         name = " ".join(name.split())
         name = name.replace(price, "")
-
-        return [Food("Mittagstisch Express", price, "Mittagstisch", 2, name[3:-1])]
-    
+        k = OrderedDict()
+        k["Mittagstisch"] = [Food("Mittagstisch Express", price, "Mittagstisch", 2, name[3:-1])]
+        return k
 
 # if __name__ == "__main__":
 #     food = get_food_items()

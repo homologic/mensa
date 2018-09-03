@@ -4,7 +4,6 @@ from mensa import base
 import urllib.error
 import os
 import sys
-from math import acos, radians, pi, cos, sin
 from yapsy.PluginManager import PluginManager
 try:
     import multiprocessing
@@ -44,11 +43,11 @@ def get_food(restlist=False, no_parallel=False,**options) :
         r = []
         for k,i in sources :
             r.append(i)            
-        foodl = get_food_parallel(r, ignore_nudelauswahl=True)
+        foodl = get_food_parallel(r, ignore_nudelauswahl=True, **options)
     else : 
         for k,i in sources :
             try : 
-                food = i.get_food(ignore_nudelauswahl=True)
+                food = i.get_food(ignore_nudelauswahl=True, **options)
                 foodl.append((i, food))
                 # print("*"*20+i.human_name+"*"*20+"\n"+base.formt(food))
             except base.NoMenuError:

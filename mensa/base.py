@@ -22,20 +22,6 @@ class Renderer(object) :
     def render(self, foods, **options) :
         self.module.render(foods, **options)
         
-def formt (food) :
-    cat = []
-    vegkeys = [ "", "Vegetarian", "Vegan" ]
-    r = ""
-    food.sort(key=lambda foo: foo.category)
-    for i in food:
-        if not i.category in cat :
-            cat.append(i.category)
-            if not i.category == None : 
-                r=r+ i.category+"\n"
-        r=r+"\t" + i.name.ljust(80) + "\t"+ i.price.ljust(20) + vegkeys[i.veggie]+"\n"
-        if i.desc :
-            r = r+"\t  "+i.desc+"\n"
-    return r
 from math import acos, radians, pi, cos, sin
 def dist(pos1, pos2) :
     # gives a rough estimate of the distance Accuracy: +/- cos(angle
@@ -66,6 +52,7 @@ class Restaurant(object):
 
     def get_food(self,**opt_args) :
         return self.module.get_food_items(*self.obligatory_args, **opt_args)
+
 
 def register_restaurant(restaurant):
     global foodsources

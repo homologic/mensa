@@ -7,6 +7,7 @@ import sys
 import datetime
 from mensa.base import *
 from yapsy.IPlugin import IPlugin
+from collections import OrderedDict
 
 class Signh(IPlugin) :
     def register_restaurants(self) :
@@ -27,7 +28,7 @@ class Signh(IPlugin) :
         the_page = response.read()
         document = html5lib.parse(the_page, treebuilder="lxml")
         groupsel = CSSSelector('.menu-list__items')
-        myorder=[0,3,1,4,2]
+        myorder=[0,3,1,4,2] # Weird order for weekdays, due to page layout.
         mylist = [ groupsel(document)[i] for i in myorder]
         i = mylist[weekday]
         fl = []
@@ -48,9 +49,8 @@ class Signh(IPlugin) :
                     veg = 2
             fl.append(Food(name, price, "Essen", veg, desc))
         sys.stderr = s
-        return fl
+        k = OrderedDict()
+        k["Essen"] = fl
+        return k
 
-if __name__ == "__main__":
-    food = get_food_items()
-    print(formt(food))
 

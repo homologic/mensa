@@ -9,7 +9,7 @@ from mensa.base import *
 from yapsy.IPlugin import IPlugin
 import multiprocessing
 import datetime
-
+from collections import OrderedDict
 
 from yapsy import NormalizePluginNameForModuleName as normalize
 mensenliste = {"TU Hardenbergstraße" : ["mensa-tu-hardenbergstra%C3%9Fe", (52.5097684, 13.3259478)],
@@ -43,18 +43,20 @@ class Studentenwerk(IPlugin) :
         for h,n in mensenliste.items() :
             r = Restaurant(normalize(h), h, self, "dummy", [n[0]], pos=n[1])
             register_restaurant(r)
-    def get_food_items(self, mensa="mensa-tu-hardenbergstra%C3%9Fe", ignore_nudelauswahl=False) :
+    def get_food_items(self, mensa="mensa-tu-hardenbergstra%C3%9Fe", ignore_nudelauswahl=False, **options) :
         document = self.fetch_page(mensa)
         groupsel = CSSSelector('.splGroupWrapper')
         groups = [e for e in groupsel(document)]
-        fl = []
-        for i in groups :
+        fl = OrderedDict()
+        for group in groups :
             try:
-                name = CSSSelector('.splGroup')(i)[0].text
+                category = CSSSelector('.splGroup')(group)[0].text
             except:
-                raise NoMenuError from None        
+                raise NoMenuError from None
+            if not category in fl :
+                fl[category] = []
             sel = CSSSelector('.splMeal')
-            meals = [e for e in sel(i)]
+            meals = [e for e in sel(group)]
             for m in meals :        
                 namesel = CSSSelector('.bold')
                 nm = namesel(m)[0].text
@@ -68,7 +70,9 @@ class Studentenwerk(IPlugin) :
                     elif "1.png" in pricesel(m)[0][1].attrib["src"] :
                         veg = 1
                 price = pricesel(m)[-1].text.strip()
-                fl.append(Food(nm, price, name, veg))
+                if "only_student_prices" in options and options["only_student_prices"] :
+                    price = only_student_prices(price)
+                fl[category].append(Food(nm, price, category, veg))
         return fl
     def get_opening_hours(self, mensa) :
         #### Rudiment of a function for getting opening hours. Does NOT work yet due to unknown issues.
