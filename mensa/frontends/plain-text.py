@@ -24,7 +24,14 @@ class TextRenderer(IPlugin) :
                 r=r+"Distance: %.2f km\n" % base.dist(options["pos"], restaurant.pos)
 
             r= r + "".join([category+"\n" + "".join([self.render_line(i) for i in items]) for category,items  in food.items()])
-        print(r)
+
+        if options.get("template") :
+            f = open(options["template"], "r")
+            template = f.read()
+            f.close()
+            print(template.replace("$$TEXT$$", r))
+        else :
+            print(r)
 
     def register_renderer(self) :
         base.register_renderer(base.Renderer("plain-text", "Plain Text Renderer", self))

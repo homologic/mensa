@@ -29,8 +29,15 @@ class HTMLRenderer(IPlugin) :
         self.options = options
 
         r = "\n".join([self.format_restaurant(restaurant, food) for restaurant, food in foods ])
-
-        print(r)
+        if options.get("template") :
+            f = open(options["template"], "r")
+            template = f.read()
+            f.close()
+            print(template.replace("$$TEXT$$", r))
+        else :
+            print(r)
+            
+        
 
     def register_renderer(self) :
         base.register_renderer(base.Renderer("html", "HTML Renderer", self))

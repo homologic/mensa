@@ -3,6 +3,7 @@ import argparse
 
 from mensa import logic
 from mensa import base
+import os
 
 parser = argparse.ArgumentParser(description='Fetch menus from various sources')
 parser.add_argument('rest', nargs="*",
@@ -14,6 +15,7 @@ parser.add_argument('-f', '--formatter', dest='form', action='store', nargs=1, h
 parser.add_argument('-p', '--pos', dest='pos', action='store', nargs=1, help="Your current position")
 parser.add_argument('-d', '--dist', dest='dist', action='store_true', help="Show distances to restaurants")
 parser.add_argument('-r', '--radius', dest='rad', action='store', nargs=1, help="Radius to find restaurants in")
+parser.add_argument('-t', '--template', dest='template', action='store', nargs=1, help="Template file to use")
 parser.add_argument('-g', '--vegetarian',  dest='vegetarian', action='store_true',
                     help='show only vegetarian meals')
 parser.add_argument('-G', '--vegan',  dest='vegan', action='store_true',
@@ -59,6 +61,11 @@ if args.vegetarian :
 if args.vegan :
     veggie = 2
 
+if args.template :
+    args.template = os.path.expanduser(args.template[0])
+    if not os.path.exists(args.template) :
+        print("File not found: " + os.path.expanduser(args.template))
+        exit(1)
 
 
 if args.list :
@@ -70,4 +77,4 @@ if args.rest :
     restlist = args.rest
 
 foodl = logic.get_food(restlist, no_parallel=args.no_parallel, pos=args.pos, rad=args.rad, only_student_prices=args.student)
-logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student, pos=args.pos, dist=args.dist)
+logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student, pos=args.pos, dist=args.dist, template=args.template)
