@@ -10,6 +10,11 @@ try:
     parallel=True
 except:
     parallel = False
+
+
+import importlib
+
+
     
 def init_foodsources():
     backends = PluginManager()

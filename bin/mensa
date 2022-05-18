@@ -22,7 +22,7 @@ parser.add_argument('-G', '--vegan',  dest='vegan', action='store_true',
                     help='show only vegan meals')
 parser.add_argument('--studentenwerk-prices',  dest='student', action='store_true', default=False,
                     help='show only student prices')
-
+parser.add_argument('-b', '--no-boring', dest='no_boring', action="store_true", default=False, help="Do not show meals that are available every day.")
 parser.add_argument('--no-parallel', dest="no_parallel", action="store_true", default=False, help="Do not parallelize fetching, might help with rate-limited websites")
 
 
@@ -76,5 +76,5 @@ restlist = None
 if args.rest :
     restlist = args.rest
 
-foodl = logic.get_food(restlist, no_parallel=args.no_parallel, pos=args.pos, rad=args.rad, only_student_prices=args.student)
+foodl = logic.get_food(restlist, no_parallel=args.no_parallel, pos=args.pos, rad=args.rad, only_student_prices=args.student, args=args)
 logic.render(foodl, form, only_veggie=veggie, only_student_prices=args.student, pos=args.pos, dist=args.dist, template=args.template)

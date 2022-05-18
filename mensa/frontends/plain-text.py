@@ -1,5 +1,6 @@
 from mensa import base
 from yapsy.IPlugin import IPlugin
+import textwrap
 class TextRenderer(IPlugin) :
     def render_line(self, item) :
         vegkeys = [ "", "Vegetarian", "Vegan" ]
@@ -7,8 +8,11 @@ class TextRenderer(IPlugin) :
             return ""
         desc = ""
         if item.desc : 
-            desc = "\t  "+item.desc+"\n"            
-        return "\t" + item.name.ljust(80) + "\t"+ item.price.ljust(20) + vegkeys[item.veggie]+"\n"+desc
+            desc = "      "+item.desc+"\n"
+        nameparts = textwrap.wrap(item.name, 60)
+        l = [ "  " + nameparts[0].ljust(60) + "    " + item.price.ljust(19) + vegkeys[item.veggie] ] + [ "  "+ i.ljust(50) for i in nameparts[1:]]
+        # "\t" + item.name.ljust(80) + "\t"+ item.price.ljust(20) + vegkeys[item.veggie]+"\n"+desc
+        return "\n".join(l) + "\n"
     
     def render (self, foods, **options) :
         self.options = options

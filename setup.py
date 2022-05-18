@@ -10,7 +10,7 @@ def read(fname):
 
 setup(
     name = "mensa",
-    version = "0.4.1",
+    version = "0.6.0",
     author = "Antonia Pérez-Cerezo",
     author_email = "antonia@antonia.is",
     description = ("A program that fetches menus from various restaurants. Pre-installed by default are various cafeterias around TU Berlin."),
