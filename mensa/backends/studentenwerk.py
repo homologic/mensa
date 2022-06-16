@@ -62,14 +62,16 @@ class Studentenwerk(IPlugin) :
                 #raise NoMenuError from None
             if no_boring and category in boring :
                 continue
+            if category == "Aktionen" : # remove arbitrary distinction between meal types.
+                category = "Essen"
             if not category in fl :
                 fl[category] = []
             sel = CSSSelector('.splMeal')
             meals = [e for e in sel(group)]
             for m in meals :        
                 namesel = CSSSelector('.bold')
-                nm = namesel(m)[0].text
-                if no_boring  and "Nudelauswahl" in nm :
+                nm = namesel(m)[0].text.strip()
+                if no_boring  and ( "Nudelauswahl" in nm or nm in ["Hartkäse gerieben", "Sauce & Dip Extra"] ):
                     continue
                 pricesel = CSSSelector('.col-md-3')
                 veg = 0
