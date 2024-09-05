@@ -13,7 +13,7 @@ from yapsy.IPlugin import IPlugin
 from collections import OrderedDict
 class Mathemensa(IPlugin) :
     def register_restaurants(self) :
-        r = Restaurant("Mathekantine", "Mathekantine", self, "dummy", pos=(52.51388,13.3235066))
+        r = Restaurant("Cafeteria_EN", "Cafeteria EN", self, "dummy", pos=(52.51388,13.3235066))
         register_restaurant(r)
         
     def get_food_items(self, **kwargs) :

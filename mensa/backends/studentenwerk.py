@@ -17,7 +17,7 @@ from yapsy import NormalizePluginNameForModuleName as normalize
 mensenliste = {"TU Hardenbergstraße" : ["mensa-tu-hardenbergstra%C3%9Fe", (52.5097684, 13.3259478)],
                "TU Veggie 2.0" : ["veggie2.0", (52.5097684, 13.3259478)],
                "TU Marchstraße": ["cafeteria-tu-marchstra%C3%9Fe", ( 52.5166071, 13.3234066)],
-               "TU Skyline": ["cafeteria-tu-skyline", (52.5128648, 13.3200313)],
+               "TU Skyline": ["einrichtungen/technische-universit%C3%A4t-berlin/mensa-tu-skyline", (52.5128648, 13.3200313)],
                "TU Architektur": ["cafeteria-tu-architektur", (52.5137508, 13.3234541)],
                "TU Ackerstraße": ["cafeteria-tu-ackerstra%C3%9Fe", (52.5386545, 13.3845294)],
                "HU Nord": ["mensa-hu-nord", (52.52816,13.38208)],
@@ -64,6 +64,8 @@ class Studentenwerk(IPlugin) :
                 continue
             if category == "Aktionen" : # remove arbitrary distinction between meal types.
                 category = "Essen"
+            if category == "Suppen" or category == "Vorspeisen" :
+                category = "Suppen und Vorspeisen"
             if not category in fl :
                 fl[category] = []
             sel = CSSSelector('.splMeal')
